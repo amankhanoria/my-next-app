@@ -39,6 +39,21 @@ export default function UserProfilePage({ params }: any) {
       setLoading(false)
     }
   };
+
+  const seeNotes = async () => {
+    try {
+      setLoading(true)
+      // signUp request
+      const response = await axios.get(`/api/users/getNotes/${params.id}`)
+      console.log("seeNotes Success", response.data);
+      router.push(`/seeNotes/${params.id}`)
+      
+    } catch (error : any) {
+      toast.error(error.message)
+    }finally{
+      setLoading(false)
+    }
+  };
   
   return (
     <div>
@@ -50,7 +65,9 @@ export default function UserProfilePage({ params }: any) {
           <hr />
           <p>Username: {user.userDetails.username}</p>
           <p>Email: {user.userDetails.email}</p>
-          <button className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600" onClick={deleteUser}>Delete Account</button>
+          {/* <button className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600" onClick={deleteUser}>Delete Account</button> */}
+          <button className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600" onClick={seeNotes}>See Notes</button>
+          
         </>
       ) : (
         <p>User not found</p>
