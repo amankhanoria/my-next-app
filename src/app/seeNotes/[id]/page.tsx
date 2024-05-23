@@ -53,7 +53,7 @@ export default function UserProfilePage({ params }: any) {
         // Create new note
         const response = await axios.post(`/api/users/createNotes/${params.id}`, { note });
         console.log("createNotes Success", response.data);
-        setNotes([...notes, response.data]);
+        setNotes([...notes, response.data.savedNote]);
         toast.success("Note created successfully!");
       }
       setNote("");
