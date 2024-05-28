@@ -4,6 +4,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import Modal from "react-modal";
+import "../../../app/styles.css";
 
 // Set app element to body to ensure accessibility
 if (typeof window !== "undefined") {
@@ -25,7 +26,7 @@ export default function UserProfilePage({ params }: any) {
         setLoading(true);
         const response = await axios.get(`/api/users/getNotes/${params.id}`);
         console.log("response----", response.data.noteDetails);
-        
+
         setUser(response.data);
         setNotes(response.data.noteDetails);
         setLoading(false);
@@ -44,14 +45,22 @@ export default function UserProfilePage({ params }: any) {
       setLoading(true);
       if (editId) {
         // Update note
-        const response = await axios.put(`/api/users/updateNote/${params.id}`, { note, _id: editId });
+        const response = await axios.put(`/api/users/updateNote/${params.id}`, {
+          note,
+          _id: editId,
+        });
         console.log("updateNote Success", response.data);
-        const updatedNotes = notes.map(n => n._id === editId ? { ...n, note } : n);
+        const updatedNotes = notes.map((n) =>
+          n._id === editId ? { ...n, note } : n
+        );
         setNotes(updatedNotes);
         toast.success("Note updated successfully!");
       } else {
         // Create new note
-        const response = await axios.post(`/api/users/createNotes/${params.id}`, { note });
+        const response = await axios.post(
+          `/api/users/createNotes/${params.id}`,
+          { note }
+        );
         console.log("createNotes Success", response.data);
         setNotes([...notes, response.data.savedNote]);
         toast.success("Note created successfully!");
@@ -71,7 +80,7 @@ export default function UserProfilePage({ params }: any) {
       setLoading(true);
       await axios.get(`/api/users/deleteNote/${_id}`);
       console.log("deleteNote Success");
-      const updatedNotes = notes.filter(n => n._id !== _id);
+      const updatedNotes = notes.filter((n) => n._id !== _id);
       setNotes(updatedNotes);
       toast.success("Note deleted successfully!");
     } catch (error: any) {
@@ -91,14 +100,21 @@ export default function UserProfilePage({ params }: any) {
     <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gradient-to-r from-purple-400 to-blue-500">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
         {loading ? (
-          <p className="text-center text-xl font-semibold text-blue-700">Loading...</p>
+          <p className="text-center text-xl font-semibold text-blue-700">
+            Loading...
+          </p>
         ) : user ? (
           <>
-            <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Your Notes</h1>
+            <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">
+              Your Notes
+            </h1>
             <hr className="mb-6" />
             <ul>
               {notes.map(({ note, _id }) => (
-                <li key={_id} className="p-2 border border-gray-300 rounded-lg mb-2">
+                <li
+                  key={_id}
+                  className="p-2 border border-gray-300 rounded-lg mb-2"
+                >
                   {note}
                   <button
                     className="ml-2 p-1 border border-gray-300 rounded-lg bg-yellow-500 text-white hover:bg-yellow-700"
@@ -125,31 +141,42 @@ export default function UserProfilePage({ params }: any) {
               isOpen={isModalOpen}
               onRequestClose={() => setIsModalOpen(false)}
               contentLabel="Create Note Modal"
+              className="modal"
+              overlayClassName="overlay"
             >
-              <h2>{editId ? "Edit Note" : "Create a New Note"}</h2>
-              <textarea
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
-                rows={5}
-                cols={40}
-                className="p-2 border border-gray-300 rounded-lg w-full mb-4"
-              />
-              <button
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-                onClick={createOrUpdateNote}
-              >
-                {editId ? "Update Note" : "Save Note"}
-              </button>
-              <button
-                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-                onClick={() => setIsModalOpen(false)}
-              >
-                Cancel
-              </button>
+              <div className="modal-content">
+                <h2 className="text-xl font-bold mb-4 text-blue-700">
+                  {editId ? "Edit Note" : "Create a New Note"}
+                </h2>
+                <textarea
+                  value={note}
+                  onChange={(e) => setNote(e.target.value)}
+                  rows={5}
+                  cols={40}
+                  className="p-2 border border-gray-300 rounded-lg w-full mb-4 focus:outline-none focus:border-blue-500"
+                  placeholder="Enter your note here..."
+                />
+                <div className="flex justify-end">
+                  <button
+                    className="button-primary"
+                    onClick={createOrUpdateNote}
+                  >
+                    {editId ? "Update Note" : "Save Note"}
+                  </button>
+                  <button
+                    className="button-secondary"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
             </Modal>
           </>
         ) : (
-          <p className="text-center text-xl font-semibold text-red-700">User not found</p>
+          <p className="text-center text-xl font-semibold text-red-700">
+            User not found
+          </p>
         )}
       </div>
     </div>
