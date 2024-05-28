@@ -88,68 +88,70 @@ export default function UserProfilePage({ params }: any) {
   };
 
   return (
-    <div>
-      {loading ? (
-        <p>Loading...</p>
-      ) : user ? (
-        <>
-          <h1>Your Notes</h1>
-          <hr />
-          <ul>
-            {notes.map(({ note, _id }) => (
-              <li key={_id} className="p-2 border border-gray-300 rounded-lg mb-2">
-                {note}
-                <button
-                  className="ml-2 p-1 border border-gray-300 rounded-lg bg-yellow-500 text-white hover:bg-yellow-700"
-                  onClick={() => openEditModal(note, _id)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="ml-2 p-1 border border-gray-300 rounded-lg bg-red-500 text-white hover:bg-red-700"
-                  onClick={() => deleteNote(_id)}
-                >
-                  Delete
-                </button>
-              </li>
-            ))}
-          </ul>
-          <button
-            className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-blue-500 text-white hover:bg-blue-700"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Create Note
-          </button>
-          <Modal
-            isOpen={isModalOpen}
-            onRequestClose={() => setIsModalOpen(false)}
-            contentLabel="Create Note Modal"
-          >
-            <h2>{editId ? "Edit Note" : "Create a New Note"}</h2>
-            <textarea
-              value={note}
-              onChange={(e) => setNote(e.target.value)}
-              rows={5}
-              cols={40}
-              className="p-2 border border-gray-300 rounded-lg w-full mb-4"
-            />
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gradient-to-r from-purple-400 to-blue-500">
+      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+        {loading ? (
+          <p className="text-center text-xl font-semibold text-blue-700">Loading...</p>
+        ) : user ? (
+          <>
+            <h1 className="text-3xl font-bold mb-6 text-center text-blue-700">Your Notes</h1>
+            <hr className="mb-6" />
+            <ul>
+              {notes.map(({ note, _id }) => (
+                <li key={_id} className="p-2 border border-gray-300 rounded-lg mb-2">
+                  {note}
+                  <button
+                    className="ml-2 p-1 border border-gray-300 rounded-lg bg-yellow-500 text-white hover:bg-yellow-700"
+                    onClick={() => openEditModal(note, _id)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="ml-2 p-1 border border-gray-300 rounded-lg bg-red-500 text-white hover:bg-red-700"
+                    onClick={() => deleteNote(_id)}
+                  >
+                    Delete
+                  </button>
+                </li>
+              ))}
+            </ul>
             <button
-              className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-              onClick={createOrUpdateNote}
+              className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600 bg-blue-500 text-white hover:bg-blue-700"
+              onClick={() => setIsModalOpen(true)}
             >
-              {editId ? "Update Note" : "Save Note"}
+              Create Note
             </button>
-            <button
-              className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
-              onClick={() => setIsModalOpen(false)}
+            <Modal
+              isOpen={isModalOpen}
+              onRequestClose={() => setIsModalOpen(false)}
+              contentLabel="Create Note Modal"
             >
-              Cancel
-            </button>
-          </Modal>
-        </>
-      ) : (
-        <p>User not found</p>
-      )}
+              <h2>{editId ? "Edit Note" : "Create a New Note"}</h2>
+              <textarea
+                value={note}
+                onChange={(e) => setNote(e.target.value)}
+                rows={5}
+                cols={40}
+                className="p-2 border border-gray-300 rounded-lg w-full mb-4"
+              />
+              <button
+                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+                onClick={createOrUpdateNote}
+              >
+                {editId ? "Update Note" : "Save Note"}
+              </button>
+              <button
+                className="p-2 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600"
+                onClick={() => setIsModalOpen(false)}
+              >
+                Cancel
+              </button>
+            </Modal>
+          </>
+        ) : (
+          <p className="text-center text-xl font-semibold text-red-700">User not found</p>
+        )}
+      </div>
     </div>
   );
 }
