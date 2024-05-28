@@ -35,23 +35,27 @@ function EditUserModal({
   };
 
   return (
-    <div className="modal">
-      <div className="modal-content">
-        <span className="close" onClick={closeModal}>
+    <div className="moda">
+      <div className="moda-content">
+        <span className="clos" onClick={closeModal}>
           &times;
         </span>
-        <h2>Edit User</h2>
+        <h2 className="moda-title">Edit User</h2>
         <input
           type="text"
           value={newUsername}
           onChange={(e) => setNewUsername(e.target.value)}
+          className="moda-input"
         />
         <input
           type="email"
           value={newEmail}
           onChange={(e) => setNewEmail(e.target.value)}
+          className="moda-input"
         />
-        <button onClick={handleSave}>Save</button>
+        <button onClick={handleSave} className="moda-btn">
+          Save
+        </button>
       </div>
     </div>
   );
@@ -152,7 +156,7 @@ export default function UserProfilePage({ }: any) {
         <p>Loading...</p>
       ) : users && users.userDetails.length > 0 ? (
         <>
-          <h1>User Profiles</h1>
+          <h1 className="page-title">User Profiles</h1>
           <table className="user-table">
             <thead>
               <tr>
@@ -194,7 +198,7 @@ export default function UserProfilePage({ }: any) {
       ) : (
         <p>No users found</p>
       )}
-
+  
       <div className="pagination">
         <button
           className="pagination-btn"
@@ -218,4 +222,6 @@ export default function UserProfilePage({ }: any) {
       )}
     </div>
   );
+  
+  
 }
