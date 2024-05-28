@@ -151,6 +151,7 @@ export default function UserProfilePage({ }: any) {
   };
 
   return (
+    <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gradient-to-r">
     <div>
       {loading ? (
         <p>Loading...</p>
@@ -220,6 +221,7 @@ export default function UserProfilePage({ }: any) {
           updateUser={handleUpdateUser}
         />
       )}
+    </div>
     </div>
   );
   
