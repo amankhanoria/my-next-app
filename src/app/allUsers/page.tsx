@@ -4,6 +4,9 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import "../../app/styles.css";
 import toast from "react-hot-toast";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+
 interface EditUserModalProps {
   userId: string;
   username: string;
@@ -173,22 +176,26 @@ export default function UserProfilePage({ }: any) {
                   <td>{user.email}</td>
                   <td>
                     <button
-                      className="action-btn view"
+                      // className="action-btn view"
                       onClick={() => handleView(user._id)}
                     >
-                      View
+                      <FontAwesomeIcon icon={faEye} />
+                       {/* View */}
+
                     </button>
                     <button
-                      className="action-btn edit"
+                      // className="action-btn edit"
                       onClick={() => handleEdit(user)}
                     >
-                      Edit
+                      <FontAwesomeIcon icon={faEdit} /> 
+                      {/* Edit */}
                     </button>
                     <button
-                      className="action-btn delete"
+                      // className="action-btn delete"
                       onClick={() => handleDelete(user._id)}
                     >
-                      Delete
+                      <FontAwesomeIcon icon={faTrash} />
+                      {/* Delete */}
                     </button>
                   </td>
                 </tr>
