@@ -3,12 +3,28 @@ const userSchema = new mongoose.Schema({
   username: {
     type : String,
     required: [true, "Please provide username."],
-    unique: true
   },
   email: {
     type : String,
     required: [true, "Please provide email."],
     unique: true
+  },
+  mobile: {
+    type : String,
+    unique: true
+  },
+  address: {
+    type : String,
+    unique: true
+  },
+  gender: {
+    type: String,
+    enum: ["male", "female"],
+    required: [false, "Please provide gender."],
+  },
+  pic: {
+    type: Buffer,
+    // default: "default-pic-url"
   },
   password: {
     type : String,
